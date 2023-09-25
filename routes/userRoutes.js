@@ -1,8 +1,10 @@
-require("dotenv").config
-
 const express = require("express")
 const bcrypt = require("bcrypt")
 const User = require("../database/User")
+
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const passwordRegex =
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+,\-./:;<=>?@[\]^_`{|}~])(?=.{8,})/;
 
 class UserClass {
     constructor(username, email, password) {
@@ -28,15 +30,30 @@ router.post('/signup', async (req, res) => {
         if(!username || !email || !password){
             return res.status(422).json({ message: "Please fill all the required details"})
         }
+        const sanitizedUsername = username.trim();
+        const sanitizedEmail = email.trim();
 
-        const existingName = await User.findOne({ where: {username}})
-        const existingEmail = await User.findOne({ where: {email}})
+        if (!emailRegex.test(sanitizedEmail)) {
+          return res.status(422).json({ message: "Invalid email format" });
+        }
+
+        if (!passwordRegex.test(password)) {
+          return res
+            .status(422)
+            .json({
+              message:
+                "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character, and be at least 8 characters long"
+            });
+        }
+
+        const existingName = await User.findOne({ where: {sanitizedUsername}})
+        const existingEmail = await User.findOne({ where: {sanitizedEmail}})
 
         if(existingName || existingEmail){
             return res.status(409).json({ message: "User with this name or email already exists"})
         }
 
-        const newUser = new UserClass(username, email, password)
+        const newUser = new UserClass(sanitizedUsername, sanitizedEmail, password)
 
         const savedUser = await newUser.save()
 
