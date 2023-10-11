@@ -1,3 +1,11 @@
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at DATETIME,
+    updated_at DATETIME
+);
 
 CREATE TABLE restaurant (
  restaurant_id INT PRIMARY KEY,
@@ -21,3 +29,16 @@ CREATE TABLE tables (
     FOREIGN KEY(reservation_id) REFERENCES reservations(reservation_id)
 )
 
+ALTER TABLE tables
+ADD reservation_id INT;
+
+ALTER TABLE tables
+ADD
+FOREIGN KEY (reservation_id)
+REFERENCES reservations(reservation_id);
+
+DROP Table tables
+
+TRUNCATE TABLE reservations
+
+RENAME TABLE reservations TO reservation
