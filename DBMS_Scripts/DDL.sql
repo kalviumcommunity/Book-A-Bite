@@ -1,18 +1,20 @@
+CREATE database bookabite;
+
+
 CREATE TABLE users (
-    id INT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at DATETIME,
-    updated_at DATETIME
+     id INT PRIMARY KEY,
+     username VARCHAR(255) NOT NULL,
+     email VARCHAR(255) NOT NULL,
+     password_hash VARCHAR(255) NOT NULL,
+     created_at DATETIME,
+     updated_at DATETIME
 );
 
 CREATE TABLE restaurant (
- restaurant_id INT PRIMARY KEY,
- name VARCHAR(50) NOT NULL,
- address VARCHAR(100) NOT NULL,
- phone_nunmber INT NOT NULL
-)
+    restaurant_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    phone_nunmber VARCHAR(15) NOT NULL);
 
 CREATE TABLE reservations (
     reservation_id INT PRIMARY KEY,
@@ -24,21 +26,10 @@ CREATE TABLE reservations (
 CREATE TABLE tables (
     table_id INT PRIMARY KEY,
     status BOOL NOT NULL,
-    capacity INT NOT NULL,
-    reservation_id INT,
-    FOREIGN KEY(reservation_id) REFERENCES reservations(reservation_id)
-)
+    capacity INT NOT NULL
+);
 
-ALTER TABLE tables
-ADD reservation_id INT;
 
-ALTER TABLE tables
-ADD
-FOREIGN KEY (reservation_id)
-REFERENCES reservations(reservation_id);
+ALTER TABLE reservations ADD table_id INT
 
-DROP Table tables
-
-TRUNCATE TABLE reservations
-
-RENAME TABLE reservations TO reservation
+ALTER TABLE reservations ADD FOREIGN KEY (table_id) REFERENCES tables(table_id);
