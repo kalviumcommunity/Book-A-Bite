@@ -1,6 +1,13 @@
 const mysql = require("mysql2");
 const connection = require("./config");
 
+let counter = 0;
+
+const generateID = () => {
+  counter++
+  return counter
+}
+
 function CheckExistingUser(username, email) {
   const existingUserQuery =
     "SELECT * FROM users WHERE email = ? OR username = ?";
@@ -11,7 +18,7 @@ function CheckExistingUser(username, email) {
         console.error("Error querying database:", err);
         reject(err);
       } else {
-        resolve(results.length > 0);
+        resolve(results.length > 0 && results[0]);
       }
     });
   });
@@ -19,12 +26,12 @@ function CheckExistingUser(username, email) {
 
 function createUser(username, email, password) {
   const createUserQuery =
-    "INSERT INTO users (username, email, password, createdAt, updatedAt) VALUES (?, ?, ?, NOW(), NOW())";
+    "INSERT INTO users (id, username, email, password) VALUES (?,?, ?, ?)";
 
   return new Promise((resolve, reject) => {
     connection.query(
       createUserQuery,
-      [username, email, password],
+      [generateID(),username, email, password],
       (err, result) => {
         if (err) {
           console.error("Error inserting into database:", err);

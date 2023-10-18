@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const e = require('express')
 
 class Bcrypt {
     #password = ''
@@ -12,9 +13,14 @@ class Bcrypt {
         return hashedPassword
     }
 
-    async verify() {
-        const verifyPassword = await bcrypt.verify(this.#password)
-        return verifyPassword
+    async verify(userPassword) {
+        const verifyPassword = await bcrypt.compare(this.#password, userPassword)
+        if(!verifyPassword){
+            return false
+        }
+        else{
+            return true
+        }
     }
 }
 
