@@ -1,9 +1,13 @@
-INSERT INTO users (username, email, password, createdAt, updatedAt) VALUES ('Rahul', 'rahul@gmail.com', 'password@123', NOW(), NOW());
+select * from tables;
 
-SELECT * FROM restaurant;
+insert into users (id, username, email, password_hash, created_at, updated_at) VALUES ('2', 'ram', 'kumar@gmail.com', 'password123', NOW(), NOW())
+ 
+insert into restaurant (restaurant_id, name, address, phone_nunmber) Values (1, 'Starbucks', 'Unimall, Jalandhar', 924075754)
 
-INSERT INTO reservations (dateofbook, customer_id, reservation_id) VALUES ('2021-01-01', 1, 1);
+insert into reservations (reservation_id, dateofbook, customer_id, table_id) values (1.NOW(),2,1)
 
-UPDATE reservations SET dateofbook = '2021-01-02' WHERE reservation_id = 1;
+insert into tables (table_id, status, capacity, restaurant_id) values (2, false, 2,1) 
+ 
+update tables set status=true where table_id=2
 
-DELETE FROM reservations WHERE reservation_id = 1;
+desc tables;
