@@ -3,12 +3,12 @@ class Validation {
   static passwordRegex =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+,\-./:;<=>?@[\]^_`{|}~])(?=.{8,})/;
 
-  testEmailRegex(email) {
-      return this.emailRegex.test(email)? 0 : 1;
+  static testEmailRegex(email) {
+      return Validation.emailRegex.test(email);
   }
 
-  testPasswordRegex(password) {
-      return this.passwordRegex.test(password) ? 0 : 1;
+  static testPasswordRegex(password) {
+      return Validation.passwordRegex.test(password);
   }
 
 }
