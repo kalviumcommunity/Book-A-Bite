@@ -26,7 +26,7 @@ CREATE TABLE reservations (
 CREATE TABLE tables (
     table_id INT PRIMARY KEY,
     status BOOL NOT NULL,
-    capacity INT NOT NULL
+    capacity INT NOT NULL,
     restaurant_id INT,
     FOREIGN KEY(restaurant_id) REFERENCES restaurant(restaurant_id)
 );
