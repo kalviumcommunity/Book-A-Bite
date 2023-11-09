@@ -9,7 +9,7 @@ const generateID = () => {
 }
 
 function CreateRestaurant(name, address, phone) {
-  const createRestaurantQuery = "INSERT INTO restaurants (restaurant_id, name, address, phone_number) VALUES (?,?,?,?)"
+  const createRestaurantQuery = "INSERT INTO restaurant (restaurant_id, name, address, phone_number) VALUES (?,?,?,?)"
 
   return new Promise((resolve, reject) => {
     connection.query(createRestaurantQuery, [generateID(), name, address, phone], (err, result) => {
@@ -24,7 +24,7 @@ function CreateRestaurant(name, address, phone) {
 }
 
 function GetAllRestaurant() {
-  const getAllRestaurantQuery = "SELECT * FROM restaurants"
+  const getAllRestaurantQuery = "SELECT * FROM restaurant"
 
   return new Promise((resolve, reject) => {
     connection.query(getAllRestaurantQuery, (err, result) => {

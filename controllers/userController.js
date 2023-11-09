@@ -1,14 +1,11 @@
-const express = require("express")
 const Bcrypt = require("../services/bcrypt")
 const Validation = require("../services/validation")
 const UserDB = require("../database/user")
 const jwt = require("jsonwebtoken")
 
-const router = express.Router()
-
 require("dotenv").config();
 
-router.post('/signup', async (req, res) => {
+const createUser = async (req, res) => {
     try{
         const {username, email, password} = req.body
         
@@ -22,13 +19,13 @@ router.post('/signup', async (req, res) => {
             return res.status(409).json({ message: "User with this name or email already exists"})
         }
 
-        const validateEmail = Validation.emailRegex.test(email);
+        const validateEmail = Validation.testEmailRegex(email);
         if(!validateEmail){
           return res.status(422).json({ message: "Invalid Email Format"})
         }
 
 
-        const validatePass = Validation.passwordRegex.test(password)
+        const validatePass = Validation.testPasswordRegex(password)
         if(!validatePass){
           return res
             .status(422)
@@ -53,9 +50,9 @@ router.post('/signup', async (req, res) => {
         return res.status(500).json({ message: 'Internal Server Error'})
     }
 
-})
+}
 
-router.post("/login", async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { email, username, password } = req.body;
 
@@ -95,7 +92,10 @@ router.post("/login", async (req, res) => {
       .status(500)
       .json({ message: "Internal Server Error", error: error });
   }
-});
+}
 
 
-module.exports = router;
+module.exports = {
+    createUser,
+    loginUser
+}

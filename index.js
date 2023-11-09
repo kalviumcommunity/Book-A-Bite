@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const connection = require("./database/config");
-const userRoutes = require("./controllers/userController");
+const userRoutes = require("./routers/user.router")
+const tableRoutes = require("./controllers/tableController");
+const restaurantRoutes = require("./routers/restaurant.router");
 
 const app = express();
 
@@ -15,13 +17,15 @@ app.use((req, res, next) => {
 });
 
 app.use("/user", userRoutes);
+app.use("/restaurant", restaurantRoutes)
+app.use("/table", tableRoutes)
 
 // Start the Express server
 app.listen(process.env.PORT, () => {
   console.log(`Server started on port: ${process.env.PORT}`);
 });
 
-// Hanling mysql connections here
+// Handling mysql connections here
 connection.connect((err) => {
   if (err) {
     console.error("Error connecting to the database:", err);
