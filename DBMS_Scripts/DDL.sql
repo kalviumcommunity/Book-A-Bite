@@ -20,6 +20,8 @@ CREATE TABLE reservations (
     reservation_id INT PRIMARY KEY,
     dateofbook DATE NOT NULL,
     customer_id INT,
+    table_id INT,
+    FOREIGN KEY(table_id) REFERENCES tables(table_id),
     FOREIGN KEY(customer_id) REFERENCES users(id)
 )
 
@@ -35,3 +37,7 @@ CREATE TABLE tables (
 ALTER TABLE reservations ADD table_id INT
 
 ALTER TABLE reservations ADD FOREIGN KEY (table_id) REFERENCES tables(table_id);
+
+ select * from users where id = 2;
+
+SELECT username, Count(*) AS user_count FROM users GROUP BY username HAVING user_count > 1;  
