@@ -63,3 +63,7 @@ GRANT SELECT ON tables TO waiter, customer;
 GRANT SELECT, INSERT, UPDATE, DELETE ON reservations TO waiter, customer;
 
 GRANT admin TO 'root'@'localhost';
+
+SELECT reservation_id, dateofbook
+FROM reservations
+WHERE customer_id = (SELECT id FROM users WHERE username = 'ram');
