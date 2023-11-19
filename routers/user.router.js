@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/userController");
+const {
+  UserCreationService,
+  UserLoginService
+} = require("../controllers/userController");
 
 router.post("/signup", async (req, res) => {
   try {
-    await userController.createUser(req, res);
+    await UserCreationService.createUser(req, res);
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -13,7 +16,7 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    await userController.loginUser(req, res);
+    await UserLoginService.loginUser(req, res);
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ message: "Internal Server Error" });

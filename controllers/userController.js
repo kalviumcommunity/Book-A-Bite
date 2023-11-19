@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
-class UserService {
+class UserCreationService {
   async createUser(req, res) {
     try {
       const { username, email, password } = req.body;
@@ -51,7 +51,9 @@ class UserService {
       return res.status(500).json({ message: "Internal Server Error" });
     }
   }
+}
 
+class UserLoginService {
   async loginUser(req, res) {
     try {
       const { email, username, password } = req.body;
@@ -93,4 +95,7 @@ class UserService {
   }
 }
 
-module.exports = new UserService();
+module.exports = {
+  UserCreationService: new UserCreationService(),
+  UserLoginService: new UserLoginService()
+};
