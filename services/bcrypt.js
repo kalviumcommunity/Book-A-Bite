@@ -1,27 +1,30 @@
-const bcrypt = require('bcrypt')
-const e = require('express')
+class BcryptInterface {
+  async hash() {
+    throw new Error("Method not implemented");
+  }
 
-class Bcrypt {
-    #password = ''
+  async verify(userPassword) {
+    throw new Error("Method not implemented");
+  }
+}
 
-    constructor(password){
-        this.#password = password
-    }
+class Bcrypt extends BcryptInterface {
+  #password = "";
 
-    async hash() {
-        const hashedPassword = await bcrypt.hash(this.#password, 10)
-        return hashedPassword
-    }
+  constructor(password) {
+    super();
+    this.#password = password;
+  }
 
-    async verify(userPassword) {
-        const verifyPassword = await bcrypt.compare(this.#password, userPassword)
-        if(!verifyPassword){
-            return false
-        }
-        else{
-            return true
-        }
-    }
+  async hash() {
+    const hashedPassword = await bcrypt.hash(this.#password, 10);
+    return hashedPassword;
+  }
+
+  async verify(userPassword) {
+    const verifyPassword = await bcrypt.compare(this.#password, userPassword);
+    return verifyPassword;
+  }
 }
 
 module.exports = Bcrypt;
