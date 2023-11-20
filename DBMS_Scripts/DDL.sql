@@ -67,3 +67,9 @@ GRANT admin TO 'root'@'localhost';
 SELECT reservation_id, dateofbook
 FROM reservations
 WHERE customer_id = (SELECT id FROM users WHERE username = 'ram');
+
+CREATE INDEX idx_username ON users(username);
+
+SELECT username
+FROM users
+WHERE username = 'john_doe';
